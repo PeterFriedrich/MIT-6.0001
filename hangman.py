@@ -53,12 +53,12 @@ wordlist = load_words()
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
-    secret_word: string, the word the user is guessing; assumes all letters are
-      lowercase
-    letters_guessed: list (of letters), which letters have been guessed so far;
-      assumes that all letters are lowercase
-    returns: boolean, True if all the letters of secret_word are in letters_guessed;
-      False otherwise
+    secret_word: string, the word the user is guessing; assumes all letters
+     are lowercase
+    letters_guessed: list (of letters), which letters have been guessed so
+     far; assumes that all letters are lowercase
+    returns: boolean, True if all the letters of secret_word are in
+     letters_guessed; False otherwise
     '''
     for i in secret_word:
         if i not in letters_guessed:
@@ -69,23 +69,53 @@ def is_word_guessed(secret_word, letters_guessed):
 def get_guessed_word(secret_word, letters_guessed):
     '''
     secret_word: string, the word the user is guessing
-    letters_guessed: list (of letters), which letters have been guessed so far
-    returns: string, comprised of letters, underscores (_), and spaces that represents
-      which letters in secret_word have been guessed so far.
+     letters_guessed: list (of letters), which letters have been guessed so far
+    returns: string, comprised of letters, underscores (_), and spaces that
+     represents which letters in secret_word have been guessed so far.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-
+    guess_string = ''
+    for i in secret_word:
+        if i not in letters_guessed:
+            guess_string = guess_string + '_'
+        else:
+            guess_string = guess_string + i
+    return guess_string
 
 
 def get_available_letters(letters_guessed):
     '''
     letters_guessed: list (of letters), which letters have been guessed so far
-    returns: string (of letters), comprised of letters that represents which letters have not
-      yet been guessed.
+    returns: string (of letters), comprised of letters that represents which
+     letters have not yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    alphabet = string.ascii_lowercase
+    letter_string = ''
+    for i in alphabet:
+        if i not in letters_guessed:
+            letter_string = letter_string + i
+    return letter_string
+
+
+def check_letter(guess,warnings_remaining,secret_word, letters_guessed,
+                guesses_remaining):
+    '''
+    guess: string, the current guess that the user has entered
+    warnings_remaining: int of remaining warnings
+    secret_word: string that is chosen word for game
+    letters_guess: list of letters already guessed
+    guesses_remaining: remaining guesses
+    '''
+    if not str.isalpha(guess):
+        if warnings_remaining > 0:
+            warnings_remaining -= 1
+            print('Oops! That is not a valid letter. You have {}'
+            'warnings left: {}'.format(warnings_remaining,
+            get_guessed_word(secret_word, letters_guessed)))
+            return False
+        else:
+            return True
+
+def is_match(guess, secret_word, letters_guessed, guesses)
 
 
 
@@ -114,10 +144,26 @@ def hangman(secret_word):
 
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    # Declare variables
+    swl = len(secret_word)
+    guesses_remaining = 6
+    warnings_remaining = 3
+    letters_guessed = []
 
+    # First announcements code
+    print("Welcome to the game Hangman!")
+    print("I am thinking of a word that is {} letters long.".format(swl))
+    print("-------------")
+    print("You have {} guesses left.".format(guesses_remaining))
+    print("Available letters:", get_available_letters(letters_guessed))
 
+    while True:
+        guess = input('Please guess a letter: ')
+        cl = check_letter(guess,warnings_remaining,secret_word, letters_guessed,
+                     guesses_remaining)
+        if cl True:
+            guess = string.lower(guess)
+            is_match = (guess, secret_word)
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
