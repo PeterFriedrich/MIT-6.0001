@@ -213,7 +213,12 @@ def hangman(secret_word):
             return
         if is_word_guessed(secret_word, letters_guessed) == True:
             print('Congratulations, you won!')
-            print('Your total score for this game is ')
+            score_word = ''
+            for i in secret_word:
+                if i not in score_word:
+                    score_word = score_word + i
+            score = guesses_remaining*len(score_word)
+            print('Your total score for this game is:',score)
             return
 
         print("You have {} guesses left.".format(guesses_remaining))
