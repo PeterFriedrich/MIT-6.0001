@@ -176,6 +176,9 @@ def update_hand(hand, word):
 
     Updates the hand: uses up the letters in the given word
     and returns the new hand, without those letters in it.
+    - If a player guesses an invalid word, lose the letters from the hand
+    as a penalty
+    - make sure the word given only uses letters in the hand
 
     Has no side effects: does not modify hand.
 
@@ -183,9 +186,22 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)
     returns: dictionary (string -> int)
     """
-     
+    word = str.lower(word)
+    new_hand = {}
+    entry = 0
+    word_dict = get_frequency_dict(word)
 
+    for letter in hand:
+        if letter not in word_dict:
+            new_hand[letter] = hand[letter]
+        else:
+            entry = hand[letter] - word_dict[letter]
+            # ex entry = 2 - 1 = 1 letter left in hand
+            if entry >= 0:
+                new_hand[letter] = entry
+        entry = 0
 
+    return new_hand
 #
 # Problem #3: Test word validity
 #
@@ -195,13 +211,30 @@ def is_valid_word(word, hand, word_list):
     composed of letters in the hand. Otherwise, returns False.
     Does not mutate hand or word_list.
 
+    Should fail if used twice on same hand
+
     word: string
     hand: dictionary (string -> int)
     word_list: list of lowercase strings
     returns: boolean
     """
+    word = str.lower(word)
+    word_dict = get_frequency_dict(word)
 
-    pass  # TO DO... Remove this line when you implement this function
+    if word not in word_list:
+        return False
+
+    for letter in word_dict:
+        if hand.get(letter, 0) == 0:
+            #print(letter,'get')
+            #print(hand, word)
+            return False
+        elif hand[letter] < word_dict[letter]:
+            #print(letter,'equality')
+            #print(hand, word)
+            return False
+
+    return True
 
 #
 # Problem #5: Playing a hand
