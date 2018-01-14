@@ -1,5 +1,5 @@
 # Problem Set 4A
-# Name: <your name here>
+# Name: Peter Friedrich
 # Collaborators:
 # Time Spent: x:xx
 
@@ -23,7 +23,23 @@ def get_permutations(sequence):
     a different order than what is listed here.
     '''
 
-    pass #delete this line and replace with your code here
+    # base case
+    if len(sequence) == 1:
+        permutations = []
+        permutations.append(sequence)
+        return permutations
+
+    # recursive case
+    else:
+        # call for permutations of smaller case
+        temp = get_permutations(sequence[1:])
+        permutations = []
+        # insert new permutations using first sequence letter
+        for i in range(len(temp)):
+            for j in range(len(sequence)):
+                    permutations.append(temp[i][j:] + sequence[0] + temp[i][:j])
+
+        return permutations
 
 if __name__ == '__main__':
 #    #EXAMPLE
@@ -36,4 +52,22 @@ if __name__ == '__main__':
 #    to be three characters or fewer as you will have n! permutations for a
 #    sequence of length n)
 
-    pass #delete this line and replace with your code here
+    # Case 1: dog
+    example_input = 'dog'
+    print('Input:', example_input)
+    print('Expected Output:', ['dog', 'dgo', 'odg', 'ogd', 'god', 'gdo'])
+    print('Actual Output:', get_permutations(example_input))
+
+    # Case 2: sam
+    example_input = 'sam'
+    print('Input:', example_input)
+    print('Expected Output:', ['sam', 'sma', 'ams', 'asm', 'mas', 'msa'])
+    print('Actual Output:', get_permutations(example_input))
+
+    # Case 3: pal
+    example_input = 'pal'
+    print('Input:', example_input)
+    print('Expected Output:', ['pal', 'pla', 'apl', 'alp', 'lap', 'lpa'])
+    print('Actual Output:', get_permutations(example_input))
+
+    print(get_permutations('blam'))
