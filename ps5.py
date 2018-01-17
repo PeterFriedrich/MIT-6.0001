@@ -54,8 +54,28 @@ def process(url):
 
 # Problem 1
 
-# TODO: NewsStory
+class NewsStory(object):
+    def __init__(self, guid, title, description, link, pubdate):
+        self.guid = guid
+        self.title = title
+        self.description = description
+        self.link = link
+        self.pubdate = pubdate
 
+    def get_guid(self):
+        return self.guid
+
+    def get_title(self):
+        return self.title
+
+    def get_description(self):
+        return self.description
+
+    def get_link(self):
+        return self.link
+
+    def get_pubdate(self):
+        return self.pubdate
 
 #======================
 # Triggers
@@ -73,7 +93,27 @@ class Trigger(object):
 # PHRASE TRIGGERS
 
 # Problem 2
-# TODO: PhraseTrigger
+class PhraseTrigger(Trigger):
+    def __init__(self, phrase):
+        self.phrase = phrase
+
+    def is_phrase_in(self, text):
+        """
+        Takes in a string argument and returns True
+        if phrase is present in the text
+        """
+        text = text.lower()
+        text = text.strip(" !@#$%^&*()-_+={}[]|\:;'<>?,./\"")
+        # now lowercase, no spaces or punctuation on end
+        for i in string.punctuation:
+            text = text.replace(i,' ')
+        # now no puncuation inside, replaced with spaces
+        text = " ".join(text.split())
+        # splits using spaces, rejoins using single space
+        if self.phrase.lower() in text:
+            return True
+
+        return False
 
 # Problem 3
 # TODO: TitleTrigger
